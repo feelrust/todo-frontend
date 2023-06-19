@@ -14,9 +14,11 @@ export default function EditTaskPage() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const ApiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch(`https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/${id}`, {
+    const url = `${ApiUrl}/tasks/v1/${id}`;
+    fetch(url, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },

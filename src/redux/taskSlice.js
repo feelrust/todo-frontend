@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import getToken from "../helpers/token";
 
-// const ApiUrl = import.meta.env.VITE_API_URL;
+const ApiUrl = import.meta.env.VITE_API_URL;
 
 const initalState = {
   data: [],
@@ -95,30 +95,26 @@ const taskSlice = createSlice({
 export default taskSlice.reducer;
 
 export const getTasks = createAsyncThunk("task/getTasks", async () => {
-  const response = await fetch(
-    "https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/",
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  const url = `${ApiUrl}/tasks/v1`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
   const data = await response.json();
   return data;
 });
 
 export const addTask = createAsyncThunk("task/addTask", async (task) => {
-  const response = await fetch(
-    `https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/`,
-    {
-      method: "POST",
-      body: JSON.stringify(task),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  const url = `${ApiUrl}/tasks/v1`;
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(task),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
   const data = await response.json();
   return data;
 });
@@ -126,15 +122,13 @@ export const addTask = createAsyncThunk("task/addTask", async (task) => {
 export const completeTask = createAsyncThunk(
   "task/completeTask",
   async (id) => {
-    const response = await fetch(
-      `https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/${id}/complete`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }
-    );
+    const url = `${ApiUrl}/tasks/v1/${id}/complete`;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     const data = await response.json();
     return data;
   }
@@ -143,46 +137,40 @@ export const completeTask = createAsyncThunk(
 export const incompleteTask = createAsyncThunk(
   "task/incompleteTask",
   async (id) => {
-    const response = await fetch(
-      `https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/${id}/incomplete`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }
-    );
+    const url = `${ApiUrl}/tasks/v1/${id}/incomplete`;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     const data = await response.json();
     return data;
   }
 );
 
 export const updateTask = createAsyncThunk("task/updateTask", async (task) => {
-  const response = await fetch(
-    `https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/${task.id}`,
-    {
-      method: "PUT",
-      body: JSON.stringify(task),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  const url = `${ApiUrl}/tasks/v1/${task.id}`;
+  const response = await fetch(url, {
+    method: "PUT",
+    body: JSON.stringify(task),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
   const data = await response.json();
   return data;
 });
 
 export const deleteTask = createAsyncThunk("task/deleteTask", async (id) => {
-  const response = await fetch(
-    `https://fardanirizkitodoapi.azurewebsites.net/tasks/v1/${id}`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  const url = `${ApiUrl}/tasks/v1/${id}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
   const data = await response.json();
   return data;
 });
