@@ -7,6 +7,8 @@ import getToken from "../helpers/token";
 import Loading from "../components/loading";
 import { toast } from "react-toastify";
 
+const ApiUrl = import.meta.env.VITE_API_URL;
+
 export default function EditTaskPage() {
   const { id } = useParams();
   const { loading } = useSelector((state) => state.task);
@@ -14,7 +16,6 @@ export default function EditTaskPage() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const ApiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const url = `${ApiUrl}/tasks/v1/${id}`;
