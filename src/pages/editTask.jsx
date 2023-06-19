@@ -35,7 +35,7 @@ export default function EditTaskPage() {
   }, [id]);
 
   const onSaveHandler = async () => {
-    if (!title) {
+    if (!title || title === "") {
       toast.error("Title is required");
       return;
     }

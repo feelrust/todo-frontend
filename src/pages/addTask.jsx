@@ -14,7 +14,7 @@ export default function AddTaskPage() {
   const [description, setDescription] = useState("");
 
   const onSaveHandler = async () => {
-    if (!title) {
+    if (!title || title === "") {
       toast.error("Title is required");
       return;
     }
