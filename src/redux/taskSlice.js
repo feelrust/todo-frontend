@@ -6,6 +6,7 @@ import getToken from "../helpers/token";
 const initalState = {
   data: [],
   loading: false,
+  error: null,
 };
 
 const taskSlice = createSlice({
@@ -20,6 +21,10 @@ const taskSlice = createSlice({
       state.data = action.payload;
       state.loading = false;
     });
+    builder.addCase(getTasks.rejected, (state, action) => {
+      state.loading = false;
+      state.error(action.error);
+    });
     builder.addCase(addTask.pending, (state) => {
       state.loading = true;
     });
@@ -27,8 +32,9 @@ const taskSlice = createSlice({
       state.data.push(action.payload);
       state.loading = false;
     });
-    builder.addCase(addTask.rejected, (state) => {
+    builder.addCase(addTask.rejected, (state, action) => {
       state.loading = false;
+      state.error(action.error);
     });
     builder.addCase(updateTask.pending, (state) => {
       state.loading = true;
@@ -39,8 +45,9 @@ const taskSlice = createSlice({
         task.id === action.payload.id ? action.payload : task
       );
     });
-    builder.addCase(updateTask.rejected, (state) => {
+    builder.addCase(updateTask.rejected, (state, action) => {
       state.loading = false;
+      state.error(action.error);
     });
     builder.addCase(deleteTask.pending, (state) => {
       state.loading = true;
@@ -50,8 +57,9 @@ const taskSlice = createSlice({
       state.loading = false;
       state.data = data.filter((task) => task.id !== action.payload.id);
     });
-    builder.addCase(deleteTask.rejected, (state) => {
+    builder.addCase(deleteTask.rejected, (state, action) => {
       state.loading = false;
+      state.error(action.error);
     });
     builder.addCase(completeTask.pending, (state) => {
       state.loading = true;
@@ -63,8 +71,9 @@ const taskSlice = createSlice({
       );
       state.loading = false;
     });
-    builder.addCase(completeTask.rejected, (state) => {
+    builder.addCase(completeTask.rejected, (state, action) => {
       state.loading = false;
+      state.error(action.error);
     });
     builder.addCase(incompleteTask.pending, (state) => {
       state.loading = true;
@@ -76,8 +85,9 @@ const taskSlice = createSlice({
       );
       state.loading = false;
     });
-    builder.addCase(incompleteTask.rejected, (state) => {
+    builder.addCase(incompleteTask.rejected, (state, action) => {
       state.loading = false;
+      state.error(action.error);
     });
   },
 });

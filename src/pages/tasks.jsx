@@ -13,12 +13,18 @@ import { toast } from "react-toastify";
 
 export default function TasksPage() {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.task);
+  const { data, loading, error } = useSelector((state) => state.task);
 
   useEffect(() => {
     dispatch(getTasks());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const handleCheck = (e, id) => {
     if (e.target.checked) {

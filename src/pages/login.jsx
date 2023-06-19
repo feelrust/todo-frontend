@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { login } from "../redux/authSlice";
+import { toast } from "react-toastify";
+import { emailValidation } from "../helpers/validation";
 
 export default function LoginPage() {
   const authUser = useSelector((state) => state.auth.user);
@@ -9,8 +11,25 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  function validate(email, password) {
+    let isValid = true;
+    if (password < 5) {
+      toast.error("password must be at least 5 characters");
+      isValid = false;
+    }
+    if (emailValidation(email) === false) {
+      toast.error("invalid email");
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
   async function handleLoginSubmit(e) {
     e.preventDefault();
+    if (!validate(email, password)) {
+      return;
+    }
     dispatch(login({ email, password }));
   }
 

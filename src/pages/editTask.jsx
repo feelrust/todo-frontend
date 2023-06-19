@@ -33,7 +33,7 @@ export default function EditTaskPage() {
 
   const onSaveHandler = async () => {
     if (!title) {
-      toast("Title is required");
+      toast.error("Title is required");
       return;
     }
     const resultAction = await dispatch(updateTask({ id, title, description }));

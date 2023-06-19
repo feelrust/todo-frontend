@@ -15,7 +15,7 @@ export default function AddTaskPage() {
 
   const onSaveHandler = async () => {
     if (!title) {
-      toast("Title is required");
+      toast.error("Title is required");
       return;
     }
     const resultAction = await dispatch(addTask({ title, description }));

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { emailValidation } from "../helpers/validation";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -10,10 +11,24 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  function validate(email, password) {
+    let isValid = true;
+    if (password < 5) {
+      toast.error("password must be at least 5 characters");
+      isValid = false;
+    }
+    if (emailValidation(email) === false) {
+      toast.error("invalid email");
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
   async function registerUser(e) {
     e.preventDefault();
-    if (password < 5) {
-      toast("password must be at least 5 characters");
+
+    if (!validate(email, password)) {
       return;
     }
 
