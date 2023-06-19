@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   completeTask,
   deleteTask,
+  dragdrop,
   getTasks,
   incompleteTask,
 } from "../redux/taskSlice";
@@ -14,6 +15,16 @@ import { toast } from "react-toastify";
 export default function TasksPage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.task);
+  const dragItem = useRef();
+  const dragOverItem = useRef();
+
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+  };
+
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+  };
 
   useEffect(() => {
     dispatch(getTasks());
@@ -32,6 +43,17 @@ export default function TasksPage() {
     } else {
       dispatch(incompleteTask(id));
     }
+  };
+
+  const drop = () => {
+    dispatch(
+      dragdrop({
+        source: dragItem.current,
+        destination: dragOverItem.current,
+      })
+    );
+    dragItem.current = null;
+    dragOverItem.current = null;
   };
 
   const handleDelete = async (id) => {
@@ -63,7 +85,14 @@ export default function TasksPage() {
       </div>
       <ul className="divide-y divide-gray-200 px-4">
         {data.map((task, index) => (
-          <li key={index} className="py-4">
+          <li
+            key={index}
+            onDragStart={(e) => dragStart(e, index)}
+            onDragEnter={(e) => dragEnter(e, index)}
+            onDragEnd={drop}
+            className="py-4"
+            draggable
+          >
             <div className="flex items-center">
               <input
                 type="checkbox"

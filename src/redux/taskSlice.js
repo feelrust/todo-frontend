@@ -12,7 +12,16 @@ const initalState = {
 const taskSlice = createSlice({
   name: "task",
   initialState: initalState,
-  reducers: {},
+  reducers: {
+    dragdrop(state, action) {
+      const { source, destination } = action.payload;
+      const copyListItems = [...state.data];
+      const dragItemContent = copyListItems[source];
+      copyListItems.splice(source, 1);
+      copyListItems.splice(destination, 0, dragItemContent);
+      state.data = copyListItems;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getTasks.pending, (state) => {
       state.loading = true;
@@ -92,6 +101,7 @@ const taskSlice = createSlice({
   },
 });
 
+export const { dragdrop } = taskSlice.actions;
 export default taskSlice.reducer;
 
 export const getTasks = createAsyncThunk("task/getTasks", async () => {
