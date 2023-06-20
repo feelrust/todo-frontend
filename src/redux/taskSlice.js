@@ -32,7 +32,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(getTasks.rejected, (state, action) => {
       state.loading = false;
-      state.error(action.error);
+      state.error = action.error;
     });
     builder.addCase(addTask.pending, (state) => {
       state.loading = true;
@@ -43,7 +43,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(addTask.rejected, (state, action) => {
       state.loading = false;
-      state.error(action.error);
+      state.error = action.error;
     });
     builder.addCase(updateTask.pending, (state) => {
       state.loading = true;
@@ -56,7 +56,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(updateTask.rejected, (state, action) => {
       state.loading = false;
-      state.error(action.error);
+      state.error = action.error;
     });
     builder.addCase(deleteTask.pending, (state) => {
       state.loading = true;
@@ -68,7 +68,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(deleteTask.rejected, (state, action) => {
       state.loading = false;
-      state.error(action.error);
+      state.error = action.error;
     });
     builder.addCase(completeTask.pending, (state) => {
       state.loading = true;
@@ -82,7 +82,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(completeTask.rejected, (state, action) => {
       state.loading = false;
-      state.error(action.error);
+      state.error = action.error;
     });
     builder.addCase(incompleteTask.pending, (state) => {
       state.loading = true;
@@ -96,7 +96,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(incompleteTask.rejected, (state, action) => {
       state.loading = false;
-      state.error(action.error);
+      state.error = action.error;
     });
   },
 });
