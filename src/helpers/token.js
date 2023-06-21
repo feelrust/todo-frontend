@@ -1,5 +1,5 @@
 function getToken() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("todoUser"));
   const { token } = user;
   return token;
 }
